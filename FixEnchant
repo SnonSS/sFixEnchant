@@ -11,24 +11,12 @@ import org.bukkit.event.Listener;
 //EVENT\\
 import org.bukkit.event.entity.EntityDamageByEntityEvent; //1\\
 import org.bukkit.event.entity.EntityInteractEvent; //2\\
-import org.bukkit.event.entity.EntityPickupItemEvent; //20\\
-import org.bukkit.event.inventory.InventoryClickEvent; //19\\
-import org.bukkit.event.inventory.InventoryCloseEvent; //15\\
-import org.bukkit.event.inventory.InventoryCreativeEvent; //10\\
-import org.bukkit.event.inventory.InventoryDragEvent; //8\\
-import org.bukkit.event.inventory.InventoryInteractEvent; //9\\
-import org.bukkit.event.inventory.InventoryMoveItemEvent; //11\\
-import org.bukkit.event.inventory.InventoryOpenEvent; //16\\
-import org.bukkit.event.player.PlayerArmorStandManipulateEvent; //17\\
-import org.bukkit.event.player.PlayerChatEvent; //13\\ 
-import org.bukkit.event.player.PlayerCommandPreprocessEvent; //14\\ 
-import org.bukkit.event.player.PlayerDropItemEvent; //12\\
-import org.bukkit.event.player.PlayerInteractAtEntityEvent; //18\\
-import org.bukkit.event.player.PlayerInteractEvent; //3\\
-import org.bukkit.event.player.PlayerItemHeldEvent; //5\\
-import org.bukkit.event.player.PlayerItemMendEvent; //6\\
-import org.bukkit.event.player.PlayerMoveEvent; //4\\
-import org.bukkit.event.player.PlayerSwapHandItemsEvent; //7\\
+import org.bukkit.event.inventory.InventoryCloseEvent; //3\\
+import org.bukkit.event.player.PlayerInteractAtEntityEvent; //4\\
+import org.bukkit.event.player.PlayerInteractEvent; //5\\
+import org.bukkit.event.player.PlayerItemHeldEvent; //6\\
+import org.bukkit.event.player.PlayerMoveEvent; //7\\
+import org.bukkit.event.player.PlayerSwapHandItemsEvent; //8\\
 //END EVENT\\
 //END EVENT\\
 //END EVENT\\
@@ -37,7 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue.Consumer;
 
-@SuppressWarnings({ "unused", "deprecation" })
+@SuppressWarnings({ "unused" })
 public class Main extends JavaPlugin implements Listener {
 	
 	public FileConfiguration config;
@@ -170,7 +158,7 @@ this.detected(player);
 //6\\
 
 @EventHandler(priority=EventPriority.HIGHEST)
-public void PlayerItemMendEvent(PlayerItemMendEvent e) {
+public void PlayerSwapHandItemsEvent(PlayerSwapHandItemsEvent e) {
 if (e.getPlayer() instanceof Player) {
 Player player = (Player)((Object)e.getPlayer());
 boolean a = this.check(player.getInventory().getHelmet(), player, p -> p.getInventory().setHelmet(null));
@@ -191,174 +179,6 @@ this.detected(player);
 //7\\
 
 @EventHandler(priority=EventPriority.HIGHEST)
-public void PlayerSwapHandItemsEvent(PlayerSwapHandItemsEvent e) {
-if (e.getPlayer() instanceof Player) {
-Player player = (Player)((Object)e.getPlayer());
-boolean a = this.check(player.getInventory().getHelmet(), player, p -> p.getInventory().setHelmet(null));
-boolean s = this.check(player.getInventory().getChestplate(), player, p -> p.getInventory().setChestplate(null));
-boolean d = this.check(player.getInventory().getLeggings(), player, p -> p.getInventory().setLeggings(null));
-boolean f = this.check(player.getInventory().getBoots(), player, p -> p.getInventory().setBoots(null));
-boolean g = this.check(player.getInventory().getItemInMainHand(), player, p -> p.getInventory().setItemInMainHand(null));
-boolean h = this.check(player.getInventory().getItemInOffHand(), player, p -> p.getInventory().setItemInOffHand(null));
-boolean j = this.check(player.getInventory().getHeldItemSlot(), player, p -> p.getInventory().setItemInOffHand(null));
-if (a || s || d || f || g || h || j) {
-e.isCancelled();
-this.detected(player);
-
-}
-}
-}
-
-//8\\
-
-@EventHandler(priority=EventPriority.HIGHEST)
-public void InventoryDragEvent(InventoryDragEvent e) {
-if (e.getInventory() instanceof Player) {
-Player player = (Player)((Object)e.getInventory());
-boolean a = this.check(player.getInventory().getHelmet(), player, p -> p.getInventory().setHelmet(null));
-boolean s = this.check(player.getInventory().getChestplate(), player, p -> p.getInventory().setChestplate(null));
-boolean d = this.check(player.getInventory().getLeggings(), player, p -> p.getInventory().setLeggings(null));
-boolean f = this.check(player.getInventory().getBoots(), player, p -> p.getInventory().setBoots(null));
-boolean g = this.check(player.getInventory().getItemInMainHand(), player, p -> p.getInventory().setItemInMainHand(null));
-boolean h = this.check(player.getInventory().getItemInOffHand(), player, p -> p.getInventory().setItemInOffHand(null));
-boolean j = this.check(player.getInventory().getHeldItemSlot(), player, p -> p.getInventory().setItemInOffHand(null));
-if (a || s || d || f || g || h || j) {
-e.isCancelled();
-this.detected(player);
-
-}
-}
-}
-
-//9\\
-
-@EventHandler(priority=EventPriority.HIGHEST)
-public void InventoryInteractEvent(InventoryInteractEvent e) {
-if (e.getInventory() instanceof Player) {
-Player player = (Player)((Object)e.getInventory());
-boolean a = this.check(player.getInventory().getHelmet(), player, p -> p.getInventory().setHelmet(null));
-boolean s = this.check(player.getInventory().getChestplate(), player, p -> p.getInventory().setChestplate(null));
-boolean d = this.check(player.getInventory().getLeggings(), player, p -> p.getInventory().setLeggings(null));
-boolean f = this.check(player.getInventory().getBoots(), player, p -> p.getInventory().setBoots(null));
-boolean g = this.check(player.getInventory().getItemInMainHand(), player, p -> p.getInventory().setItemInMainHand(null));
-boolean h = this.check(player.getInventory().getItemInOffHand(), player, p -> p.getInventory().setItemInOffHand(null));
-boolean j = this.check(player.getInventory().getHeldItemSlot(), player, p -> p.getInventory().setItemInOffHand(null));
-if (a || s || d || f || g || h || j) {
-e.isCancelled();
-this.detected(player);
-
-}
-}
-}
-
-//10\\
-
-@EventHandler(priority=EventPriority.HIGHEST)
-public void InventoryCreativeEvent(InventoryCreativeEvent e) {
-if (e.getInventory() instanceof Player) {
-Player player = (Player)((Object)e.getInventory());
-boolean a = this.check(player.getInventory().getHelmet(), player, p -> p.getInventory().setHelmet(null));
-boolean s = this.check(player.getInventory().getChestplate(), player, p -> p.getInventory().setChestplate(null));
-boolean d = this.check(player.getInventory().getLeggings(), player, p -> p.getInventory().setLeggings(null));
-boolean f = this.check(player.getInventory().getBoots(), player, p -> p.getInventory().setBoots(null));
-boolean g = this.check(player.getInventory().getItemInMainHand(), player, p -> p.getInventory().setItemInMainHand(null));
-boolean h = this.check(player.getInventory().getItemInOffHand(), player, p -> p.getInventory().setItemInOffHand(null));
-boolean j = this.check(player.getInventory().getHeldItemSlot(), player, p -> p.getInventory().setItemInOffHand(null));
-if (a || s || d || f || g || h || j) {
-e.isCancelled();
-this.detected(player);
-
-}
-}
-}
-
-//11\\
-
-@EventHandler(priority=EventPriority.HIGHEST)
-public void InventoryMoveItemEvent(InventoryMoveItemEvent e) {
-if (e.getItem() instanceof Player) {
-Player player = (Player)((Object)e.getItem());
-boolean a = this.check(player.getInventory().getHelmet(), player, p -> p.getInventory().setHelmet(null));
-boolean s = this.check(player.getInventory().getChestplate(), player, p -> p.getInventory().setChestplate(null));
-boolean d = this.check(player.getInventory().getLeggings(), player, p -> p.getInventory().setLeggings(null));
-boolean f = this.check(player.getInventory().getBoots(), player, p -> p.getInventory().setBoots(null));
-boolean g = this.check(player.getInventory().getItemInMainHand(), player, p -> p.getInventory().setItemInMainHand(null));
-boolean h = this.check(player.getInventory().getItemInOffHand(), player, p -> p.getInventory().setItemInOffHand(null));
-boolean j = this.check(player.getInventory().getHeldItemSlot(), player, p -> p.getInventory().setItemInOffHand(null));
-if (a || s || d || f || g || h || j) {
-e.isCancelled();
-this.detected(player);
-
-}
-}
-}
-
-//12\\
-
-@EventHandler(priority=EventPriority.HIGHEST)
-public void PlayerDropItemEvent(PlayerDropItemEvent e) {
-if (e.getPlayer() instanceof Player) {
-Player player = (Player)((Object)e.getPlayer());
-boolean a = this.check(player.getInventory().getHelmet(), player, p -> p.getInventory().setHelmet(null));
-boolean s = this.check(player.getInventory().getChestplate(), player, p -> p.getInventory().setChestplate(null));
-boolean d = this.check(player.getInventory().getLeggings(), player, p -> p.getInventory().setLeggings(null));
-boolean f = this.check(player.getInventory().getBoots(), player, p -> p.getInventory().setBoots(null));
-boolean g = this.check(player.getInventory().getItemInMainHand(), player, p -> p.getInventory().setItemInMainHand(null));
-boolean h = this.check(player.getInventory().getItemInOffHand(), player, p -> p.getInventory().setItemInOffHand(null));
-boolean j = this.check(player.getInventory().getHeldItemSlot(), player, p -> p.getInventory().setItemInOffHand(null));
-if (a || s || d || f || g || h || j) {
-e.isCancelled();
-this.detected(player);
-
-}
-}
-}
-
-//13\\
-
-@EventHandler(priority=EventPriority.HIGHEST)
-public void PlayerChatEvent(PlayerChatEvent e) {
-if (e.getPlayer() instanceof Player) {
-Player player = (Player)((Object)e.getPlayer());
-boolean a = this.check(player.getInventory().getHelmet(), player, p -> p.getInventory().setHelmet(null));
-boolean s = this.check(player.getInventory().getChestplate(), player, p -> p.getInventory().setChestplate(null));
-boolean d = this.check(player.getInventory().getLeggings(), player, p -> p.getInventory().setLeggings(null));
-boolean f = this.check(player.getInventory().getBoots(), player, p -> p.getInventory().setBoots(null));
-boolean g = this.check(player.getInventory().getItemInMainHand(), player, p -> p.getInventory().setItemInMainHand(null));
-boolean h = this.check(player.getInventory().getItemInOffHand(), player, p -> p.getInventory().setItemInOffHand(null));
-boolean j = this.check(player.getInventory().getHeldItemSlot(), player, p -> p.getInventory().setItemInOffHand(null));
-if (a || s || d || f || g || h || j) {
-e.isCancelled();
-this.detected(player);
-
-}
-}
-}
-
-//14\\
-
-@EventHandler(priority=EventPriority.HIGHEST)
-public void PlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent e) {
-if (e.getPlayer() instanceof Player) {
-Player player = (Player)((Object)e.getPlayer());
-boolean a = this.check(player.getInventory().getHelmet(), player, p -> p.getInventory().setHelmet(null));
-boolean s = this.check(player.getInventory().getChestplate(), player, p -> p.getInventory().setChestplate(null));
-boolean d = this.check(player.getInventory().getLeggings(), player, p -> p.getInventory().setLeggings(null));
-boolean f = this.check(player.getInventory().getBoots(), player, p -> p.getInventory().setBoots(null));
-boolean g = this.check(player.getInventory().getItemInMainHand(), player, p -> p.getInventory().setItemInMainHand(null));
-boolean h = this.check(player.getInventory().getItemInOffHand(), player, p -> p.getInventory().setItemInOffHand(null));
-boolean j = this.check(player.getInventory().getHeldItemSlot(), player, p -> p.getInventory().setItemInOffHand(null));
-if (a || s || d || f || g || h || j) {
-e.isCancelled();
-this.detected(player);
-
-}
-}
-}
-
-//15\\
-
-@EventHandler(priority=EventPriority.HIGHEST)
 public void InventoryCloseEvent(InventoryCloseEvent e) {
 if (e.getPlayer() instanceof Player) {
 Player player = (Player)((Object)e.getPlayer());
@@ -377,95 +197,12 @@ this.detected(player);
 }
 }
 
-//16\\
-
-@EventHandler(priority=EventPriority.HIGHEST)
-public void InventoryOpenEvent(InventoryOpenEvent e) {
-if (e.getPlayer() instanceof Player) {
-Player player = (Player)((Object)e.getPlayer());
-boolean a = this.check(player.getInventory().getHelmet(), player, p -> p.getInventory().setHelmet(null));
-boolean s = this.check(player.getInventory().getChestplate(), player, p -> p.getInventory().setChestplate(null));
-boolean d = this.check(player.getInventory().getLeggings(), player, p -> p.getInventory().setLeggings(null));
-boolean f = this.check(player.getInventory().getBoots(), player, p -> p.getInventory().setBoots(null));
-boolean g = this.check(player.getInventory().getItemInMainHand(), player, p -> p.getInventory().setItemInMainHand(null));
-boolean h = this.check(player.getInventory().getItemInOffHand(), player, p -> p.getInventory().setItemInOffHand(null));
-boolean j = this.check(player.getInventory().getHeldItemSlot(), player, p -> p.getInventory().setItemInOffHand(null));
-if (a || s || d || f || g || h || j) {
-e.isCancelled();
-this.detected(player);
-
-}
-}
-}
-
-//17\\
-
-@EventHandler(priority=EventPriority.HIGHEST)
-public void PlayerArmorStandManipulateEvent(PlayerArmorStandManipulateEvent e) {
-if (e.getPlayer() instanceof Player) {
-Player player = (Player)((Object)e.getPlayer());
-boolean a = this.check(player.getInventory().getHelmet(), player, p -> p.getInventory().setHelmet(null));
-boolean s = this.check(player.getInventory().getChestplate(), player, p -> p.getInventory().setChestplate(null));
-boolean d = this.check(player.getInventory().getLeggings(), player, p -> p.getInventory().setLeggings(null));
-boolean f = this.check(player.getInventory().getBoots(), player, p -> p.getInventory().setBoots(null));
-boolean g = this.check(player.getInventory().getItemInMainHand(), player, p -> p.getInventory().setItemInMainHand(null));
-boolean h = this.check(player.getInventory().getItemInOffHand(), player, p -> p.getInventory().setItemInOffHand(null));
-boolean j = this.check(player.getInventory().getHeldItemSlot(), player, p -> p.getInventory().setItemInOffHand(null));
-if (a || s || d || f || g || h || j) {
-e.isCancelled();
-this.detected(player);
-
-}
-}
-}
-
-//18\\
+//8\\
 
 @EventHandler(priority=EventPriority.HIGHEST)
 public void PlayerInteractAtEntityEvent(PlayerInteractAtEntityEvent e) {
 if (e.getPlayer() instanceof Player) {
 Player player = (Player)((Object)e.getPlayer());
-boolean a = this.check(player.getInventory().getHelmet(), player, p -> p.getInventory().setHelmet(null));
-boolean s = this.check(player.getInventory().getChestplate(), player, p -> p.getInventory().setChestplate(null));
-boolean d = this.check(player.getInventory().getLeggings(), player, p -> p.getInventory().setLeggings(null));
-boolean f = this.check(player.getInventory().getBoots(), player, p -> p.getInventory().setBoots(null));
-boolean g = this.check(player.getInventory().getItemInMainHand(), player, p -> p.getInventory().setItemInMainHand(null));
-boolean h = this.check(player.getInventory().getItemInOffHand(), player, p -> p.getInventory().setItemInOffHand(null));
-boolean j = this.check(player.getInventory().getHeldItemSlot(), player, p -> p.getInventory().setItemInOffHand(null));
-if (a || s || d || f || g || h || j) {
-e.isCancelled();
-this.detected(player);
-
-}
-}
-}
-
-//19\\
-
-@EventHandler(priority=EventPriority.HIGHEST)
-public void InventoryClickEvent(InventoryClickEvent e) {
-if (e.getClickedInventory() instanceof Player) {
-Player player = (Player)((Object)e.getClickedInventory());
-boolean a = this.check(player.getInventory().getHelmet(), player, p -> p.getInventory().setHelmet(null));
-boolean s = this.check(player.getInventory().getChestplate(), player, p -> p.getInventory().setChestplate(null));
-boolean d = this.check(player.getInventory().getLeggings(), player, p -> p.getInventory().setLeggings(null));
-boolean f = this.check(player.getInventory().getBoots(), player, p -> p.getInventory().setBoots(null));
-boolean g = this.check(player.getInventory().getItemInMainHand(), player, p -> p.getInventory().setItemInMainHand(null));
-boolean h = this.check(player.getInventory().getItemInOffHand(), player, p -> p.getInventory().setItemInOffHand(null));
-boolean j = this.check(player.getInventory().getHeldItemSlot(), player, p -> p.getInventory().setItemInOffHand(null));
-if (a || s || d || f || g || h || j) {
-e.isCancelled();
-this.detected(player);
-}
-}
-}
-
-//20\\
-
-@EventHandler(priority=EventPriority.HIGHEST)
-public void EntityPickupItemEvent(EntityPickupItemEvent e) {
-if (e.getItem() instanceof Player) {
-Player player = (Player)((Object)e.getItem());
 boolean a = this.check(player.getInventory().getHelmet(), player, p -> p.getInventory().setHelmet(null));
 boolean s = this.check(player.getInventory().getChestplate(), player, p -> p.getInventory().setChestplate(null));
 boolean d = this.check(player.getInventory().getLeggings(), player, p -> p.getInventory().setLeggings(null));
