@@ -1,7 +1,13 @@
 package sFixEnchant;
 
+import java.io.File;
+import java.io.IOException;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,6 +36,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	public FileConfiguration config;
 	
+	String maxlevell;
+	
+	String removee;
+	
+	String punishenable;
+	
+	String punishcommand;
+	
 	public void onLoad() {
         this.saveDefaultConfig();
 		
@@ -43,6 +57,7 @@ public class Main extends JavaPlugin implements Listener {
 
 public void onDisable() {
  getLogger().info("Disabled");
+ saveConfig();
  
  }
  
@@ -261,7 +276,9 @@ return a || a;
 private boolean checkEnchant(ItemStack stack, Player player, MessagePassingQueue.Consumer<Player> playerConsumer) {
 for (Integer enchLevel : stack.getEnchantments().values()) {
 if (enchLevel <= this.getConfig().getInt("maxlevel", 5)) continue;
+getConfig().getBoolean("maxlevel");
 if (this.getConfig().getBoolean("remove")) {
+getConfig().getBoolean("remove");
 playerConsumer.accept((Player)player);
 }
 
@@ -275,8 +292,68 @@ return false;
 
 private void detected(Player player) {
 if (this.getConfig().getBoolean("punish.enable")) {
+getConfig().getBoolean("punish.enable");
 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), this.getConfig().getString("punish.command").replace("%player", player.getName()));
+getConfig().getBoolean("punish.command");
 
 }
 }
+
+public boolean onCommand(CommandSender sender, Command cmd, String cmdLabel, String[] args) {
+    if (args.length == 0)
+      return false; 
+    Player player = (sender instanceof Player) ? (Player)sender : null;
+    if (args[0].equalsIgnoreCase("reload")) {
+      if (player == null || player.hasPermission("sFixEnchant.reload"))
+        return ReloadCFG(sender); 
+      sender.sendMessage(ChatColor.RED + "[sFixEnchant] Нет прав!");
+      return false;
+    } 
+    return true;
+  }
+  
+  private boolean ReloadCFG(CommandSender sender) {
+    if (sender != null)
+      sender.sendMessage(ChatColor.GREEN + "[sFixEnchant] Успешно перезагружено!");
+    load();
+    return true;
+}
+
+public void save() {
+    getConfig().set("maxlevel", this.maxlevell);
+    getConfig().set("remove", this.removee);
+    getConfig().set("punish.enable", this.punishenable);
+    getConfig().set("punish.command", this.punishcommand);
+    saveConfig();
+  }
+  
+  public void load() {
+    reloadConfig();
+    this.maxlevell = getConfig().getString("maxlevel");
+    this.removee = getConfig().getString("remove");
+    this.punishenable = getConfig().getString("punish.enable");
+    this.punishcommand = getConfig().getString("punish.command");
+  }
+  
+  private FileConfiguration getConfig(String name) {
+    File f = new File(getDataFolder(), name);
+    if (getResource(name) == null)
+      return save((FileConfiguration)YamlConfiguration.loadConfiguration(f), name); 
+    if (!f.exists())
+      saveResource(name, false); 
+    return (FileConfiguration)YamlConfiguration.loadConfiguration(f);
+  }
+  
+  private FileConfiguration save(FileConfiguration config, String name) {
+    try {
+      config.save(new File(getDataFolder(), name));
+    } catch (IOException e) {
+      e.printStackTrace();
+    } 
+    return config;
+  }
+  
+  private String colorize(String text) {
+    return ChatColor.translateAlternateColorCodes('&', "&f" + text);
+  }
 }
