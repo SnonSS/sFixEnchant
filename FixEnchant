@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -12,6 +15,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.server.ServerCommandEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 //EVENT\\
 //EVENT\\
 //EVENT\\
@@ -44,14 +50,32 @@ public class Main extends JavaPlugin implements Listener {
 	
 	String punishcommand;
 	
+	String message_reload;
+	
+	String playerjoinhide;
+	
+	String playerquithide;
+	
 	public void onLoad() {
         this.saveDefaultConfig();
 		
 	}
 	
+ @SuppressWarnings("deprecation")
+ 
+ /////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ 
  public void onEnable() {
  getLogger().info("Enabled");
- this.getServer().getPluginManager().registerEvents(this, this);
+ this.config = this.getConfig("config.yml");
+ Bukkit.getServer().getPluginManager().registerEvents(this, this);
+ 
+ ////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+ for (World w : Bukkit.getWorlds())
+ w.setGameRuleValue("announceAdvancements", "false");
+ for (World w : Bukkit.getWorlds())
+ w.setGameRuleValue("showDeathMessages", "false");
          
 }
 
@@ -319,11 +343,18 @@ public boolean onCommand(CommandSender sender, Command cmd, String cmdLabel, Str
     return true;
 }
 
+private static String getMessagePrefixed(String string) {
+	return null;
+}
+
 public void save() {
     getConfig().set("maxlevel", this.maxlevell);
     getConfig().set("remove", this.removee);
     getConfig().set("punish.enable", this.punishenable);
     getConfig().set("punish.command", this.punishcommand);
+    getConfig().set("player_join_hide", this.playerjoinhide);
+    getConfig().set("player_quit_hide", this.playerquithide);
+    
     saveConfig();
   }
   
@@ -333,6 +364,8 @@ public void save() {
     this.removee = getConfig().getString("remove");
     this.punishenable = getConfig().getString("punish.enable");
     this.punishcommand = getConfig().getString("punish.command");
+    this.playerjoinhide = getConfig().getString("player_join_hide");
+    this.playerquithide = getConfig().getString("player_quit_hide");
   }
   
   private FileConfiguration getConfig(String name) {
@@ -356,4 +389,30 @@ public void save() {
   private String colorize(String text) {
     return ChatColor.translateAlternateColorCodes('&', "&f" + text);
   }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  @EventHandler(priority = EventPriority.MONITOR)
+  public void onServerCommandEvent(ServerCommandEvent event) {
+    if (event.getCommand().startsWith("/"))
+      event.setCommand(event.getCommand().replaceFirst("/", "")); 
+    if (event.getCommand().startsWith("//"))
+        event.setCommand(event.getCommand().replaceFirst("//", "")); 
+  }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+@EventHandler
+public void PlayerQuitEvent(PlayerQuitEvent event) {
+	getConfig().getBoolean("player_quit_hide");
+  event.setQuitMessage(null);
 }
+
+@EventHandler
+public void PlayerJoinEvent(PlayerJoinEvent event) {
+	getConfig().getBoolean("player_join_hide");
+  event.setJoinMessage(null);
+}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
